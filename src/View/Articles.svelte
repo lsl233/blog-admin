@@ -1,4 +1,5 @@
 <script>
+import { link } from 'svelte-spa-router'
 import http from '../utils/http'
 
 let articles = []
@@ -11,6 +12,7 @@ getArticles()
 </script>
 
 <div class="container">
+	<h1>文章</h1>
 	<table>
 		<thead>
 		<tr>
@@ -24,8 +26,8 @@ getArticles()
 			<tr>
 				<td>{item.title}</td>
 				<td>
-                    <button>编辑</button>
-                </td>
+					<a href="/editor/{item.id}" use:link>编辑</a>
+				</td>
 			</tr>
         {/each}
 		</tbody>
@@ -33,30 +35,30 @@ getArticles()
 </div>
 
 <style>
-    th, td {
-	    padding: 5px 8px;
-    }
+	th, td {
+		padding: 5px 8px;
+	}
 
-    td {
-	    border: 1px solid #d4d4d4;
-    }
+	td {
+		border: 1px solid #d4d4d4;
+	}
 
-    th {
-	    background-color: #555;
-	    border: 1px solid #555;
-        color: #fff;
-    }
+	th {
+		background-color: #555;
+		border: 1px solid #555;
+		color: #fff;
+	}
 
-    table {
-	    border-collapse: collapse;
-    }
+	table {
+		border-collapse: collapse;
+	}
 
-    table button {
-        margin: 0;
-        font-size: 12px;
-    }
+	table button {
+		margin: 0;
+		font-size: 12px;
+	}
 
-    table tr:nth-child(odd) {
-	    background-color: #f6f4f0;
-    }
+	table tr:nth-child(odd) {
+		background-color: #f6f4f0;
+	}
 </style>

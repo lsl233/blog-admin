@@ -41,9 +41,8 @@ class Http {
 	}
 
 	get (path, data) {
-		if (data && data.data) {
-			path += this.obj2QueryString(data.data)
-			delete data.data
+		if (data) {
+			path += this.obj2QueryString(data)
 		}
 
 		const options = this.mergeOptions({
@@ -57,15 +56,15 @@ class Http {
 	}
 
 	post (path, data) {
-		return fetch(this.api + path, {
-			body: JSON.stringify(data),
-			method: 'POST',
-			mode: 'cors',
-			headers: new Headers({
-				'Accept': 'application/json'
-			})
-		})
+		if (data) {
+			data.body = JSON.stringify(data)
+		}
 
+		const options = this.mergeOptions({
+			body: JSON.stringify(data),
+			method: 'POST'
+		})
+		return this.handleResult(fetch(this.api + path, options))
 	}
 }
 

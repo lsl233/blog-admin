@@ -15,10 +15,11 @@ const handleEditorChange = async (ctx) => {
 	timer = setTimeout(async () => {
 		timer && clearTimeout(timer)
 		let res, err
+        const value = ctx.value()
         if (id) {
-            [res, err] = await http.post(`/api/v1/articles/${id}`, { markdown: ctx.value() })
+            [res, err] = await http.post(`/api/v1/articles/${id}`, { markdown: value })
         } else {
-	        [res, err] = await http.post(`/api/v1/articles`, { markdown: ctx.value() })
+	        [res, err] = await http.post(`/api/v1/articles`, { markdown: value })
 	        id = res.data.id
         }
 	}, 300)

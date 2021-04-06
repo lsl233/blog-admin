@@ -1,4 +1,5 @@
 <script>
+import { push } from 'svelte-spa-router'
 import http from '../utils/http'
 
 let username = ''
@@ -14,20 +15,21 @@ const handleSubmit = async () => {
 	} else {
 		errMsg = ''
 		console.log('登陆成功')
-		window.location.href = '#/editor'
+		push('/articles')
 	}
 
 	submitting = false
 }
 </script>
 
-
-<h1>登陆</h1>
-<form on:submit|preventDefault={handleSubmit}>
-	<input bind:value={username} placeholder="请输入账户" />
-	<input bind:value={password} placeholder="请输入密码" type="password" />
-	<button disabled="{submitting}" type="submit">登陆</button>
-</form>
-{#if errMsg}
-	<p class="font-red">*{errMsg}</p>
-{/if}
+<div class="container">
+	<h1>登陆</h1>
+	<form on:submit|preventDefault={handleSubmit}>
+		<input bind:value={username} placeholder="请输入账户" />
+		<input bind:value={password} placeholder="请输入密码" type="password" />
+		<button disabled="{submitting}" type="submit">登陆</button>
+	</form>
+    {#if errMsg}
+		<p class="font-red">*{errMsg}</p>
+    {/if}
+</div>
