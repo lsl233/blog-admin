@@ -30,7 +30,7 @@ const initEditor = () => {
 		element: document.getElementById('editor'),
 		toolbar: false,
 		status: false,
-		autoDownloadFontAwesome: true,
+		autoDownloadFontAwesome: false,
 		spellChecker: false
 	})
 
@@ -48,8 +48,8 @@ onMount(async () => {
 	initEditor()
 
     id && getArticle()
-
 })
+
 </script>
 
 <div class="container">

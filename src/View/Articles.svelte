@@ -53,11 +53,6 @@ getArticles()
 		border-collapse: collapse;
 	}
 
-	table button {
-		margin: 0;
-		font-size: 12px;
-	}
-
 	table tr:nth-child(odd) {
 		background-color: #f6f4f0;
 	}

@@ -5,6 +5,7 @@ class Http {
 		this.api = api
 		this.defaultOptions = {
 			mode: 'cors',
+			credentials: 'include',
 			headers: new Headers({
 				'Accept': 'application/json'
 			})

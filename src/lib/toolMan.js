@@ -15,7 +15,7 @@
 		}
 	};
 
-	toolMan.isFn = toolMan.tagTester('function');
+	toolMan.isFn = toolMan.tagTester('Function');
 
 	toolMan.isEmpty = function (obj) {
 		if (obj === undefined || obj === null || obj === '') return true
@@ -28,6 +28,12 @@
 		return window && window.document
 	};
 
+	toolMan.isArray = window.isArray || toolMan.tagTester('Array');
+
+	toolMan.isObject = toolMan.tagTester('Object');
+
+	toolMan.isString = toolMan.tagTester('String');
+
 	/**
 	 * 格式化倒计时时间
 	 * @param time
@@ -37,8 +43,8 @@
 	toolMan.formatCountDown = function (time, formatTemp = 'DD:HH:MM:SS') {
 		const d = Math.floor(time / (1000 * 60 * 60 * 24));
 		const h = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		const m = Math.floor(((time % (1000 * 60 * 60)) / (1000 * 60)));
-		const s = Math.floor(((time % (1000 * 60)) / 1000));
+		const m = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+		const s = Math.floor((time % (1000 * 60)) / 1000);
 		const map = {
 			d,
 			h,
@@ -71,8 +77,7 @@
 
 		const animation = () => {
 			requestAnimationFrame(() => {
-
-				if ( nowTop <= y) return
+				if (nowTop === y) return
 				nowTop = nowTop - speed;
 				document.body.scrollTop = document.documentElement.scrollTop = nowTop;
 				animation();
@@ -98,6 +103,23 @@
 		}
 		return obj
 	};
+
+	const store = {
+		get(key) {
+			const result = localStorage.getItem(key);
+			return JSON.parse(result)
+		},
+		set(key, value) {
+			if (toolMan.isArray(value) || toolMan.isObject(value)) {
+				value = JSON.stringify(value);
+			} else {
+				value = value.toString();
+			}
+			localStorage.setItem(key, JSON.stringify(value));
+		}
+	};
+
+	toolMan.store = store;
 
 	return toolMan;
 

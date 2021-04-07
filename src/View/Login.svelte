@@ -1,6 +1,7 @@
 <script>
 import { push } from 'svelte-spa-router'
 import http from '../utils/http'
+import t from '../lib/toolMan'
 
 let username = ''
 let password = ''
@@ -14,6 +15,7 @@ const handleSubmit = async () => {
 		errMsg = err.msg || err.toString()
 	} else {
 		errMsg = ''
+		t.store.set('token', res.data)
 		console.log('登陆成功')
 		push('/articles')
 	}
