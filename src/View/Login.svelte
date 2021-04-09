@@ -15,7 +15,7 @@ const handleSubmit = async () => {
 		errMsg = err.msg || err.toString()
 	} else {
 		errMsg = ''
-		t.store.set('token', res.data)
+		t.store.set('token', res.data.token)
 		console.log('登陆成功')
 		push('/articles')
 	}

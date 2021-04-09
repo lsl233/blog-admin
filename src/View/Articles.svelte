@@ -8,11 +8,20 @@ const getArticles = async () => {
 	articles = res.data.list
 }
 
+const handleDelete = async (id) => {
+	const [res, err] = await http.delete(`/api/v1/auth/articles/${id}`)
+    console.log(res, err)
+}
+
 getArticles()
 </script>
 
 <div class="container">
-	<h1>文章</h1>
+    <div class="header">
+	    <h1>文章</h1>
+        <a class="btn" href="/editor" use:link>新建</a>
+    </div>
+
 	<table>
 		<thead>
 		<tr>
@@ -27,6 +36,7 @@ getArticles()
 				<td>{item.title}</td>
 				<td>
 					<a href="/editor/{item.id}" use:link>编辑</a>
+					<a on:click={() => handleDelete(item.id)} class="color-red">删除</a>
 				</td>
 			</tr>
         {/each}

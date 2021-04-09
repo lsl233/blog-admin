@@ -17,9 +17,9 @@ const handleEditorChange = async (ctx) => {
 		let res, err
         const value = ctx.value()
         if (id) {
-            [res, err] = await http.post(`/api/v1/articles/${id}`, { markdown: value })
+            [res, err] = await http.post(`/api/v1/auth/articles/${id}`, { markdown: value })
         } else {
-	        [res, err] = await http.post(`/api/v1/articles`, { markdown: value })
+	        [res, err] = await http.post(`/api/v1/auth/articles`, { markdown: value })
 	        id = res.data.id
         }
 	}, 300)
@@ -29,16 +29,19 @@ const initEditor = () => {
 	simplemde = new SimpleMDE({
 		element: document.getElementById('editor'),
 		toolbar: false,
-		status: false,
+		status: true,
 		autoDownloadFontAwesome: false,
-		spellChecker: false
+		spellChecker: false,
+		renderingConfig: {
+			singleLineBreaks: false
+        }
 	})
 
 	simplemde.codemirror.on('change', () => handleEditorChange(simplemde))
 }
 
 const getArticle = async () => {
-	const [res, err] = await http.get(`/api/v1/articles/${id}`)
+	const [res, err] = await http.get(`/api/v1/auth/articles/${id}`)
 	simplemde.value(res.data.content)
     console.log(res)
 }
@@ -46,8 +49,18 @@ const getArticle = async () => {
 onMount(async () => {
 	id = params.id
 	initEditor()
+    if (id) {
+	    getArticle()
+    } else {
+	    simplemde.value(
+`
+---
+title: 标题
 
-    id && getArticle()
+---
+`
+        )
+    }
 })
 
 </script>

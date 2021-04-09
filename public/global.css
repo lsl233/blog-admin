@@ -30,7 +30,7 @@ label {
 	display: block;
 }
 
-input, button, select, textarea {
+input, button, select, textarea, .btn {
 	font-family: inherit;
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;
@@ -45,7 +45,9 @@ input:disabled {
 	color: #ccc;
 }
 
-button {
+button, .btn {
+	padding: 0.4em;
+	display: inline-block;
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;
@@ -69,6 +71,12 @@ button:focus {
 	box-sizing: border-box;
 	height: 100vh;
 	padding: 16px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .font-red {

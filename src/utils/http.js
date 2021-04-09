@@ -1,4 +1,5 @@
 import config from '../config'
+import t from '../lib/toolMan'
 
 class Http {
 	constructor (api) {
@@ -7,7 +8,8 @@ class Http {
 			mode: 'cors',
 			credentials: 'include',
 			headers: new Headers({
-				'Accept': 'application/json'
+				'Accept': 'application/json',
+				'Token': t.store.getFromCatch('token', String)
 			})
 		}
 	}
@@ -41,31 +43,40 @@ class Http {
 			})
 	}
 
-	get (path, data) {
-		if (data) {
-			path += this.obj2QueryString(data)
+	request(path, options) {
+		if (options.method === 'GET') {
+			path += this.obj2QueryString(options.data)
 		}
 
-		const options = this.mergeOptions({
+		if (t.equal(options.method, 'POST', 'DELETE')) {
+			options.body = JSON.stringify(options.data)
+		}
+
+		delete options.data
+		options = this.mergeOptions(options)
+
+		return this.handleResult(fetch(this.api + path, options))
+	}
+
+	get (path, data) {
+		return this.request(path, {
 			data,
 			method: 'GET',
-			mode: 'cors'
 		})
-
-		let url = this.api + path
-		return this.handleResult(fetch(url, options))
 	}
 
 	post (path, data) {
-		if (data) {
-			data.body = JSON.stringify(data)
-		}
-
-		const options = this.mergeOptions({
-			body: JSON.stringify(data),
-			method: 'POST'
+		return this.request(path, {
+			data,
+			method: 'POST',
 		})
-		return this.handleResult(fetch(this.api + path, options))
+	}
+
+	delete(path, data) {
+		return this.request(path, {
+			data,
+			method: 'DELETE',
+		})
 	}
 }
 
