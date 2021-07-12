@@ -106,35 +106,23 @@
 
 	class Store {
 		constructor () {
-			this.catch = {};
+			this.cache = {};
 		}
 
 		get (key, converter) {
-			const value = localStorage.getItem(key);
 			let result;
+			result = this.cache[key];
+			if (result) {
+				return result
+			}
+			const value = localStorage.getItem(key);
 			if (toolMan.isFn(converter)) {
 				result = converter(value);
 			} else {
 				result = JSON.parse(value);
 			}
-			this.catch[key] = result;
+			this.cache[key] = result;
 			return result
-		}
-
-		getFromCatch (key, converter) {
-			const catchValue = this.catch[key];
-			if (catchValue) {
-				return catchValue
-			}
-			return this.get(key, converter)
-		}
-
-		clearCatch(key) {
-			if (key) {
-				delete this.catch[key];
-			} else {
-				this.catch = {};
-			}
 		}
 
 		set (key, value, converter) {
@@ -148,6 +136,14 @@
 				}
 			}
 			localStorage.setItem(key, value);
+		}
+
+		clearCache(key) {
+			if (key) {
+				delete this.cache[key];
+			} else {
+				this.cache = {};
+			}
 		}
 	}
 

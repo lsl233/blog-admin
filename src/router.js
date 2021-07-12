@@ -1,6 +1,6 @@
-import Editor from './View/Editor.svelte'
-import Login from './View/Login.svelte'
-import Articles from './View/Articles.svelte'
+import Editor from './view/Editor.svelte'
+import Login from './view/Login.svelte'
+import Articles from './view/Articles.svelte'
 
 export default {
 	'/login': Login,

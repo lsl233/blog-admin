@@ -10,6 +10,7 @@ const getArticles = async () => {
 
 const handleDelete = async (id) => {
 	const [res, err] = await http.delete(`/api/v1/auth/articles/${id}`)
+	getArticles()
     console.log(res, err)
 }
 
@@ -36,6 +37,7 @@ getArticles()
 				<td>{item.title}</td>
 				<td>
 					<a href="/editor/{item.id}" use:link>编辑</a>
+					<!-- svelte-ignore a11y-missing-attribute -->
 					<a on:click={() => handleDelete(item.id)} class="color-red">删除</a>
 				</td>
 			</tr>

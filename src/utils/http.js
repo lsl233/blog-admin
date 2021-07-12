@@ -6,10 +6,10 @@ class Http {
 		this.api = api
 		this.defaultOptions = {
 			mode: 'cors',
-			credentials: 'include',
+			// credentials: 'include',
 			headers: new Headers({
 				'Accept': 'application/json',
-				'Token': t.store.getFromCatch('token', String)
+				'Token': t.store.get('token', String)
 			})
 		}
 	}
@@ -19,7 +19,7 @@ class Http {
 	}
 
 	obj2QueryString (obj) {
-		if (!obj) return ''
+		if (!obj || !obj.keys) return ''
 		const keys = obj.keys()
 		if (!keys.length) return ''
 		const query = []

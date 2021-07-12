@@ -3,8 +3,10 @@
     import routes from './router'
     import t from './lib/toolMan'
 
-    if (!t.store.get('token')) {
-	    replace('/login')
+    if (t.store.get('token', String)) {
+	    replace('/articles')
+    } else {
+        replace('/login')
     }
 </script>
 

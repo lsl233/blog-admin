@@ -10,7 +10,7 @@ let errMsg = ''
 
 const handleSubmit = async () => {
 	submitting = true
-	const [res, err] = await http.post('/api/v1/auth/', { username, password })
+	const [res, err] = await http.post('/api/v1/auth/session', { username, password })
 	if (err) {
 		errMsg = err.msg || err.toString()
 	} else {
